@@ -40,6 +40,7 @@ app.layout = html.Div([
 # dataset link : https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv
 df = pd.read_csv('country_dataset.csv')
 df = df.drop('GDP (BILLIONS)', axis=1)
+print(df.head())
 df['livable'] = df['COUNTRY'].isin([None])
 df["livable"] = df["livable"].astype(int)
 df["livable"] = df["livable"].astype(str)
@@ -128,7 +129,8 @@ def display_map(dataset):
     fig.update_layout(
             title='Map of countries you could live in :',
             #width=1200,
-            #height=600,
+            height=800,
+            #autosize=False,
             scene=dict(
                     zaxis=dict(range=[-0.1, 6.8], autorange=True),
                     ),
