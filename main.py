@@ -23,12 +23,13 @@ app.layout = html.Div([
     dcc.Markdown('''
         ## 🌏 Where you can go live
         '''),
+    dcc.Slider(0, 10, 1,
+            value=0,
+            id='my-slider'
+    ),
     dcc.Graph(id="barchart"),
     dcc.Graph(id="map"),
-    dcc.Slider(0, 10, 1,
-               value=0,
-               id='my-slider'
-    ), # https://community.plotly.com/t/slider-with-play-button-for-animations-independent-of-plotly/53188/11 --> voir pour play button mais marche pas 
+     # https://community.plotly.com/t/slider-with-play-button-for-animations-independent-of-plotly/53188/11 --> voir pour play button mais marche pas 
 ], className='markdown-body')
 
 # world map ------------------------------------------------------------------------------
@@ -101,15 +102,26 @@ barchartDF['interet'] = [0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18]
     Output("barchart", "figure"), 
     Input("my-slider", "value"))
 def display_map(year):
-    # still need to figure out the colors and what is displayed when hover --> for the colors --> highlight the selected year --> https://stackoverflow.com/questions/72087364/plotly-change-colors-of-specific-bars
-    fig = px.bar(barchartDF, 
+    # still need to figure out what is displayed when hover
+    data1 = barchartDF[barchartDF["years"] == 2022+year]
+    data2 = barchartDF[barchartDF["years"] != 2022+year]
+    fig1 = px.bar(data1, 
         x="years", 
         y=["investissement", "interet"], 
-        title="Coumpound interest"
+        title="Coumpound interest",
+        color_discrete_sequence=["#0D0CB5","#BECBFF"]
         )
-    #fig.update_traces(marker_color='green')
+    fig2 = px.bar(data2, 
+        x="years", 
+        y=["investissement", "interet"], 
+        title="Coumpound interest",
+        color_discrete_sequence=['#00441B','#C6EBC5']
+        )
+
+    fig3 = go.Figure(data=fig1.data + fig2.data)
+    fig3.update_layout(barmode='relative')
     print(year)
-    return fig
+    return fig3
 
 
 app.run_server(debug=True)
