@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97cc1a2f-11cd-4b5b-b193-65c3e7a47e4b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +45,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/alexis/Development/VI-WTSW",
+    "last_opened_file_path": "/Users/alexis/dev/ma-vi",
     "list.type.of.created.stylesheet": "CSS",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
@@ -91,6 +93,7 @@
       <option name="presentableId" value="Default" />
       <updated>1666356970311</updated>
       <workItem from="1666356971905" duration="4938000" />
+      <workItem from="1668078650419" duration="2343000" />
     </task>
     <servers />
   </component>
@@ -110,5 +113,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/VI_WTSW$main.coverage" NAME="main Coverage Results" MODIFIED="1666361810122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ma_vi$main.coverage" NAME="main Coverage Results" MODIFIED="1668080559239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
