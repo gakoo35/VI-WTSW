@@ -47,6 +47,7 @@ barchartDF['interet'] = [0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18]
 def display_map(year):
     fig = go.Figure(
         data=[go.Choropleth(
+
             locations=data_slider[year]['CODE'],
             z=data_slider[year]['livable'],
             colorscale='Greens',
@@ -59,7 +60,8 @@ def display_map(year):
         )]
     )
     fig.update_geos(
-        showocean=True, oceancolor="LightBlue",
+        showlakes=False,
+        projection_type="orthographic"
     )
 
     fig.update_layout(
