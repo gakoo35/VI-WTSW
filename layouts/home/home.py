@@ -124,7 +124,7 @@ home_layout = dbc.Row([
     ], md=12, lg=4, xxl=3, style=SETTINGS_CARD),
     dbc.Col([
         dbc.Row([
-            dcc.Slider(10, 80, 10, value=10, id='my-slider'),
+            dcc.Slider(0, 60, 1, value=0, id='my-slider'),
             dcc.Graph(id="barchart"),
             dcc.Graph(id="map"),
         ])

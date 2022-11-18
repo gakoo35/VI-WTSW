@@ -25,8 +25,8 @@ df_basic = pd.concat([df_color, df], ignore_index=True)
 # temp logic to add content to the slider --> same will be used later with different list of countries
 data_slider = []
 data_slider.append(df_basic)
-temp_country = ['Switzerland', 'France', 'Germany', 'Russia', 'Algeria', 'India', 'Brazil', 'Canada', 'Niger', 'Italy']
-for i in range(10):
+temp_country = ['Switzerland', 'France', 'Germany', 'Russia', 'Algeria', 'India', 'Brazil', 'Canada', 'Niger', 'Italy', 'Marshall Islands', 'Paraguay', 'Cuba', 'Wallis and Futuna', 'Nicaragua', 'Malta', 'Jersey', 'Western Sahara', 'South Korea', 'Monaco', 'Panama', 'Kyrgyzstan', 'Burkina Faso', 'Holy See', 'Iran', 'Latvia', 'Mexico', 'Saint Pierre and Miquelon', 'Democratic Republic of the Congo', 'Montenegro', 'Zimbabwe', 'India', 'Nauru', 'Turkmenistan', 'Tonga', 'Cape Verde', 'Yemen', 'Saint Lucia', 'Bermuda', 'Croatia', 'The Gambia', 'Aruba', 'Faroe Islands', 'Bolivia', 'Bangladesh', 'Reunion', 'Norway', 'Maldives', 'Pitcairn Islands', 'Pakistan', 'Slovakia', 'Hong Kong', 'Djibouti', 'Republic of Ireland', 'Sierra Leone', 'Albania', 'Isle of Man', 'Estonia', 'Uzbekistan', 'Canada']
+for i in range(60):
     df_temp = df.copy()
     df_temp['livable'] = df_temp['COUNTRY'].isin(temp_country[: i + 1])
     df_temp["livable"] = df_temp["livable"].astype(int)
@@ -36,9 +36,12 @@ for i in range(10):
 
 # ------------------- bar chart -----------------
 barchartDF = pd.DataFrame()
-barchartDF['years'] = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032]
-barchartDF['investissement'] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-barchartDF['interet'] = [0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18]
+temp = []
+for i in range(0, 61):
+    temp.append(2022 + i)
+barchartDF['years'] = temp
+barchartDF['investissement'] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 3, 4, 5, 6]
+barchartDF['interet'] = [0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18, 0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18, 0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18, 0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18, 0, 0, 0, 1, 1, 2, 4, 6, 10, 15, 18, 0, 0, 0, 1, 1, 2]
 
 
 @app.callback(

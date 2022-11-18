@@ -17,4 +17,4 @@ SETTINGS_CARD = {
     "margin-bottom": "2rem",
 }
 
-SETTINGS_TITLE = {"text-align": "center"}
+SETTINGS_TITLE = {"text-align": "center"}   
