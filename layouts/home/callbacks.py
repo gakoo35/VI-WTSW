@@ -97,3 +97,12 @@ def display_map(year):
     fig3.update_layout(barmode='relative')
     print(year)
     return fig3
+
+
+@app.callback(
+    [Output("inital_investment", "value"), Output("investment_per_month", "value"), Output("interest_rate", "value"),
+     Output("independence_duration", "value"), Output("withdrawals_per_month", "value")],
+    [Input("reset-button", "n_clicks")]
+)
+def on_button_click(_):
+    return 500, 100, 5.5, 30, 2000
