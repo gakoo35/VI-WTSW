@@ -20,6 +20,7 @@ appbar = dbc.NavbarSimple(
             nav=True,
             in_navbar=True,
             label="More",
+
         ),
     ],
     brand="When to stop working ?",

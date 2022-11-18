@@ -108,7 +108,7 @@ goals_inputs = [
 
 buttons = html.Div(
     [
-        dbc.Button("Reset defaults", color="warning", className="me-md-2", outline=True),
+        dbc.Button("Reset defaults", color="warning", className="me-md-2", outline=True, id="reset-button", n_clicks=0),
         dbc.Button("Visualize", color="success", outline=True),
     ],
     className="d-grid gap-2 d-md-flex justify-content-md-end",
