@@ -1,3 +1,44 @@
-.colorbar{
+
+.colorbar {
     display: none !important;
+}
+
+.icon {
+    margin-left: 10px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.content_style {
+    padding: 2rem;
+    max-width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input_group {
+    margin-bottom: 1rem;
+}
+
+.card {
+    margin-bottom: 2rem;
+}
+
+.settings_card {
+    margin-bottom: 2rem;
+}
+
+.settings_title {
+    text-align: center
+}
+
+.slider_col {
+    padding: 0px
+}
+
+.center{
+    margin: auto;
+    text-align: center;
 }

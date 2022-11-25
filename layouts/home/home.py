@@ -1,33 +1,39 @@
 import dash_bootstrap_components as dbc
-
-from styles.styles import INPUT_GROUP, CARD, SETTINGS_TITLE, SETTINGS_CARD
 from .callbacks import *
 from dash import dcc, html
 
 investments_inputs = [
     html.Div(
         [
-            html.H3("💶 Investments", style=SETTINGS_TITLE),
+            html.H4("💶 Investments", className="settings_title"),
             dbc.InputGroup([
-                dbc.Label("Initial investment"),
+                dbc.Col([
+                    dbc.Label("Initial investment"),
+                    html.I(className="icon bi bi-question-circle me-2", id="initial_investment_help"),
+                    dbc.Tooltip("Amount invested once, at the beginning", target="initial_investment_help")
+                ]),
                 dbc.InputGroup(
                     [
                         dbc.InputGroupText("$"),
                         dbc.Input(
-                            id="inital_investment",
+                            id="initial_investment",
                             type="number",
                             min=0,
                             placeholder="Type your initial investment here...",
                             value="500",
-                            step=100
+                            step=100,
+                            required=True
                         ),
                         dbc.InputGroupText(".00"),
                     ],
                 ),
-                dbc.FormText("Amount invested once, at the beginning"),
-            ], style=INPUT_GROUP),
+            ], className="input_group"),
             dbc.InputGroup([
-                dbc.Label("Investment per month"),
+                dbc.Col([
+                    dbc.Label("Investment per month"),
+                    html.I(className="icon bi bi-question-circle me-2", id="investment_per_month_help"),
+                    dbc.Tooltip("Amount invested each month", target="investment_per_month_help")
+                ]),
                 dbc.InputGroup(
                     [
                         dbc.InputGroupText("$"),
@@ -37,15 +43,19 @@ investments_inputs = [
                             min=0,
                             placeholder="Type your monthly investment here...",
                             value="100",
-                            step=50
+                            step=50,
+                            required=True
                         ),
                         dbc.InputGroupText(".00"),
                     ],
                 ),
-                dbc.FormText("Amount invested each month"),
-            ], style=INPUT_GROUP),
+            ], className="input_group"),
             dbc.InputGroup([
-                dbc.Label("Interest rate"),
+                dbc.Col([
+                    dbc.Label("Interest rate"),
+                    html.I(className="icon bi bi-question-circle me-2", id="interest_rate_help"),
+                    dbc.Tooltip("Annual interest rate on investments", target="interest_rate_help")
+                ]),
                 dbc.InputGroup(
                     [
                         dbc.Input(
@@ -54,12 +64,12 @@ investments_inputs = [
                             min=0,
                             max=100,
                             step=".10",
-                            value=5.5
+                            value=5.5,
+                            required=True
                         ),
                         dbc.InputGroupText("%"),
                     ],
                 ),
-                dbc.FormText("Annual interest rate on investments"),
             ]),
         ]
     )
@@ -68,9 +78,14 @@ investments_inputs = [
 goals_inputs = [
     html.Div(
         [
-            html.H3("🎯 Goals", style=SETTINGS_TITLE),
+            html.H4("🎯 Goals", className="settings_title"),
             dbc.InputGroup([
-                dbc.Label("Independence duration"),
+                dbc.Col([
+                    dbc.Label("Independence duration"),
+                    html.I(className="icon bi bi-question-circle me-2", id="independence_duration_help"),
+                    dbc.Tooltip("After this time, the money invested will have been recovered",
+                                target="independence_duration_help")
+                ]),
                 dbc.InputGroup([
                     dbc.Select(
                         id="independence_duration",
@@ -80,13 +95,17 @@ goals_inputs = [
                             {"label": "45 years", "value": "45"},
                             {"label": "Endless", "value": "-1"}
                         ],
-                        value="30"
+                        value="30",
+                        required=True
                     ),
                 ]),
-                dbc.FormText("After this time, the money invested will have been recovered"),
-            ], style=INPUT_GROUP),
+            ], className="input_group"),
             dbc.InputGroup([
-                dbc.Label("Withdrawals per month"),
+                dbc.Col([
+                    dbc.Label("Withdrawals per month"),
+                    html.I(className="icon bi bi-question-circle me-2", id="withdrawals_per_month_help"),
+                    dbc.Tooltip("Amount withdrawn each month", target="withdrawals_per_month_help"),
+                ]),
                 dbc.InputGroup(
                     [
                         dbc.InputGroupText("$"),
@@ -95,12 +114,26 @@ goals_inputs = [
                             type="number",
                             min=0,
                             value="2000",
-                            step=100
+                            step=100,
+                            required=True
                         ),
                         dbc.InputGroupText(".00"),
                     ],
                 ),
-                dbc.FormText("Amount withdrawn each month"),
+            ]),
+        ]
+    )
+]
+
+slider_inputs = [
+    html.Div(
+        [
+            html.H4("⏱ Duration", className="settings_title"),
+            dbc.Row([
+                dbc.Label("See evolution after"),
+                dbc.Col([dcc.Slider(5, 60, 5, value=10, id='my-slider', updatemode='drag'), ], width=10,
+                        className="slider_col"),
+                dbc.Col([dbc.FormText("years")], width=2, className="slider_col")
             ]),
         ]
     )
@@ -109,7 +142,6 @@ goals_inputs = [
 buttons = html.Div(
     [
         dbc.Button("Reset defaults", color="warning", className="me-md-2", outline=True, id="reset-button", n_clicks=0),
-        dbc.Button("Visualize", color="success", outline=True),
     ],
     className="d-grid gap-2 d-md-flex justify-content-md-end",
 )
@@ -117,16 +149,18 @@ buttons = html.Div(
 home_layout = dbc.Row([
     dbc.Col([
         dbc.Card([
+            dbc.CardBody(slider_inputs),
             dbc.CardBody(investments_inputs),
             dbc.CardBody(goals_inputs),
             dbc.CardBody(buttons)
-        ], style=CARD),
-    ], md=12, lg=4, xxl=3, style=SETTINGS_CARD),
+        ], className="card"),
+    ], md=12, lg=4, xxl=3, className="settings_card"),
     dbc.Col([
         dbc.Row([
-            dcc.Slider(0, 60, 1, value=0, id='my-slider'),
             dcc.Graph(id="barchart"),
             dcc.Graph(id="map"),
-        ])
-    ], md=12, lg=8, xxl=9, )
+        ], className="main_content", id="valid_display")
+    ], md=12, lg=8, xxl=9),
+    dcc.Store(id="bar_chart_df"),
+    dcc.Store(id="map_df")
 ])

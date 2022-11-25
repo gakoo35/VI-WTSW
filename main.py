@@ -6,7 +6,6 @@ from layouts.about.about import about_layout
 from layouts.concepts.concepts import concepts_layout
 from layouts.errors.errors import not_found_layout
 from layouts.home.home import home_layout
-from styles.styles import CONTENT_STYLE
 
 appbar = dbc.NavbarSimple(
     children=[
@@ -29,7 +28,7 @@ appbar = dbc.NavbarSimple(
     dark=True,
 )
 
-content = html.Div(id="page-content", style=CONTENT_STYLE)
+content = html.Div(id="page-content", className="content_style")
 
 app.layout = html.Div([
     dcc.Location(id="url"),
