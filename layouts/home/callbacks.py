@@ -41,7 +41,7 @@ def display_map(year, map_df):
     )
 
     fig.update_layout(
-        title='Map of countries you could live in :',
+        title='Carte des pays où vous pouvez aller vivre :',
         # width=1200,
         height=800,
         # autosize=False,
@@ -63,13 +63,13 @@ def display_bar_chart(year, bar_chart_df):
     data2 = bar_chart_df[bar_chart_df["years"] != 2022 + year]
     fig1 = px.bar(data1,
                   x="years",
-                  y=["investment", "interest"],
+                  y=["investissements", "intérêts"],
                   title="Coumpound interest",
                   color_discrete_sequence=["#0D0CB5", "#BECBFF"]
                   )
     fig2 = px.bar(data2,
                   x="years",
-                  y=["investment", "interest"],
+                  y=["investissements", "intérêts"],
                   title="Compound interest",
                   color_discrete_sequence=['#00441B', '#C6EBC5']
                   )
@@ -77,7 +77,7 @@ def display_bar_chart(year, bar_chart_df):
     fig3 = go.Figure(data=fig1.data + fig2.data)
     fig3.update_layout(barmode='relative')
     fig3.update_layout(
-        title='Parts of interests and investments over time :',
+        title='Parts des investissements et des intérêts au fil du temps :',
     )
 
     return fig3
@@ -123,8 +123,8 @@ def barchart_df(initial_investment, investment_per_month, interest_rate, indepen
     for i in range(5, 65, 5):
         temp.append(2022 + i)
     bar_chart_df['years'] = temp
-    bar_chart_df['investment'] = range(5 + initial_investment, 65 + initial_investment, 5)
-    bar_chart_df['interest'] = range(5 + initial_investment, 65 + initial_investment, 5)
+    bar_chart_df['investissements'] = range(5 + initial_investment, 65 + initial_investment, 5)
+    bar_chart_df['intérêts'] = range(5 + initial_investment, 65 + initial_investment, 5)
     return bar_chart_df.to_json(date_format='iso', orient='split')
 
 

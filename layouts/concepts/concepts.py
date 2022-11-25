@@ -1,3 +1,8 @@
-from dash import html
+from dash import dcc, html
+concepts_layout = html.Div([
+    dcc.Markdown("""
+# Concepts du cours MA-VI appliqués
 
-concepts_layout = html.P("This is the content of visualisation concepts page.")
+> TODO
+""")
+])

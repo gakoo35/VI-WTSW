@@ -9,16 +9,16 @@ from layouts.home.home import home_layout
 
 appbar = dbc.NavbarSimple(
     children=[
-        dbc.NavItem(dbc.NavLink("Home", href="/", active="exact")),
+        dbc.NavItem(dbc.NavLink("Accueil", href="/", active="exact")),
         dbc.DropdownMenu(
             children=[
-                dbc.DropdownMenuItem("Visualisation concepts", href="concepts"),
+                dbc.DropdownMenuItem("Concepts", href="concepts"),
                 dbc.DropdownMenuItem(divider=True),
-                dbc.DropdownMenuItem("About", href="about"),
+                dbc.DropdownMenuItem("À propos", href="about"),
             ],
             nav=True,
             in_navbar=True,
-            label="More",
+            label="Plus",
 
         ),
     ],
