@@ -140,6 +140,7 @@ slider_inputs = [
 buttons = html.Div(
     [
         dbc.Button("Réinitialiser", color="warning", className="me-md-2", outline=True, id="reset-button", n_clicks=0),
+        dbc.Button("Visualiser", color="success", className="me-md-2", outline=True, id="apply-button", n_clicks=0),
     ],
     className="d-grid gap-2 d-md-flex justify-content-md-end",
 )
@@ -159,6 +160,4 @@ home_layout = dbc.Row([
             dcc.Graph(id="map"),
         ], className="main_content", id="valid_display")
     ], md=12, lg=8, xxl=9),
-    dcc.Store(id="bar_chart_df"),
-    dcc.Store(id="map_df")
 ])
