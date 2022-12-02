@@ -31,7 +31,8 @@ investments_inputs = [
                 dbc.Col([
                     dbc.Label("Investissement par mois"),
                     html.I(className="icon bi bi-question-circle me-2", id="investment_per_month_help"),
-                    dbc.Tooltip("Montant investi à intervalles réguliers, chaque mois", target="investment_per_month_help")
+                    dbc.Tooltip("Montant investi à intervalles réguliers, chaque mois",
+                                target="investment_per_month_help")
                 ]),
                 dbc.InputGroup(
                     [
@@ -126,12 +127,11 @@ goals_inputs = [
 slider_inputs = [
     html.Div(
         [
-            html.H4("⏱ Durée", className="settings_title"),
             dbc.Row([
                 dbc.Label("Voir l'évolution après"),
-                dbc.Col([dcc.Slider(5, 60, 5, value=10, id='my-slider', updatemode='drag'), ], width=10,
+                dbc.Col([dcc.Slider(5, 50, 1, value=10, id='my-slider', updatemode='drag'), ], width=11,
                         className="slider_col"),
-                dbc.Col([dbc.FormText("années")], width=2, className="slider_col")
+                dbc.Col([dbc.FormText("années")], width=1, className="slider_col")
             ]),
         ]
     )
@@ -147,13 +147,13 @@ buttons = html.Div(
 home_layout = dbc.Row([
     dbc.Col([
         dbc.Card([
-            dbc.CardBody(slider_inputs),
             dbc.CardBody(investments_inputs),
             dbc.CardBody(goals_inputs),
             dbc.CardBody(buttons)
         ], className="card"),
     ], md=12, lg=4, xxl=3, className="settings_card"),
     dbc.Col([
+        dbc.CardBody(slider_inputs),
         dbc.Row([
             dcc.Graph(id="barchart"),
             dcc.Graph(id="map"),

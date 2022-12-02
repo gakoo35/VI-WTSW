@@ -103,7 +103,10 @@ def is_valid(initial_investment, investment_per_month, interest_rate, independen
 )
 def valid_display(initial_investment, investment_per_month, interest_rate, independence_duration,
                   withdrawals_per_month):
-    return [{"display": "visible"}] if is_valid(initial_investment, investment_per_month, interest_rate,
+    print(is_valid(initial_investment, investment_per_month, interest_rate,
+                                                independence_duration,
+                                                withdrawals_per_month) )
+    return [{"display": "block"}] if is_valid(initial_investment, investment_per_month, interest_rate,
                                                 independence_duration,
                                                 withdrawals_per_month) else [{"display": "none"}]
 
