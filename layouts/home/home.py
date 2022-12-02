@@ -98,27 +98,6 @@ goals_inputs = [
                         required=True
                     ),
                 ]),
-            ], className="input_group"),
-            dbc.InputGroup([
-                dbc.Col([
-                    dbc.Label("Retraits par mois"),
-                    html.I(className="icon bi bi-question-circle me-2", id="withdrawals_per_month_help"),
-                    dbc.Tooltip("Montant retiré par mois", target="withdrawals_per_month_help"),
-                ]),
-                dbc.InputGroup(
-                    [
-                        dbc.InputGroupText("$"),
-                        dbc.Input(
-                            id="withdrawals_per_month",
-                            type="number",
-                            min=0,
-                            value="2000",
-                            step=100,
-                            required=True
-                        ),
-                        dbc.InputGroupText(".00"),
-                    ],
-                ),
             ]),
         ]
     )
@@ -145,6 +124,21 @@ buttons = html.Div(
     className="d-grid gap-2 d-md-flex justify-content-md-end",
 )
 
+outputs = [
+    html.Div(
+        [
+            html.H4("💰 Retraits par mois", className="settings_title"),
+            dbc.Col([
+                dbc.Label("Montant disponible par mois"),
+                html.I(className="icon bi bi-question-circle me-2", id="monthly_withdrawals_help"),
+                dbc.Tooltip("Ce montant pourra être retiré chaque mois, durant la période objectif choisie",
+                            target="monthly_withdrawals_help"),
+                html.H4("-- CHF", className="amount", id="monthly-withdrawals")
+            ]),
+        ]
+    )
+]
+
 home_layout = dbc.Row([
     dbc.Col([
         dbc.Card([
@@ -152,12 +146,21 @@ home_layout = dbc.Row([
             dbc.CardBody(goals_inputs),
             dbc.CardBody(buttons)
         ], className="card"),
+        dbc.Card([
+            dbc.CardBody(outputs)
+        ], className="card")
     ], md=12, lg=4, xxl=3, className="settings_card"),
     dbc.Col([
-        dbc.CardBody(slider_inputs),
         dbc.Row([
-            dcc.Graph(id="barchart"),
-            dcc.Graph(id="map"),
+            dbc.CardBody(slider_inputs),
+            dbc.CardBody([
+                dbc.Label("Parts des investissements et des intérêts au fil du temps :"),
+                dcc.Graph(id="barchart"),
+            ]),
+            dbc.CardBody([
+                dbc.Label("Carte des pays où vous pouvez aller vivre :"),
+                dcc.Graph(id="map"),
+            ]),
         ], className="main_content", id="valid_display")
     ], md=12, lg=8, xxl=9),
 ])

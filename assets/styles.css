@@ -42,3 +42,8 @@
     margin: auto;
     text-align: center;
 }
+
+.amount{
+    text-align: center;
+    font-style: italic;
+}
