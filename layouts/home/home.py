@@ -82,19 +82,17 @@ goals_inputs = [
                 dbc.Col([
                     dbc.Label("Durée de l'indépendance financière"),
                     html.I(className="icon bi bi-question-circle me-2", id="independence_duration_help"),
-                    dbc.Tooltip("Après ce temps, l'entièreté de l'argent investi aura été récupéré",
+                    dbc.Tooltip("Durée durant laquelle vous souhaitez vivre de rentes passives",
                                 target="independence_duration_help")
                 ]),
                 dbc.InputGroup([
                     dbc.Select(
                         id="independence_duration",
                         options=[
-                            {"label": "15 years", "value": "15"},
-                            {"label": "30 years", "value": "30"},
-                            {"label": "45 years", "value": "45"},
-                            {"label": "Endless", "value": "-1"}
+                            {"label": "30 ans", "value": 30},
+                            {"label": "Indéterminée", "value": -1}
                         ],
-                        value="30",
+                        value=30,
                         required=True
                     ),
                 ]),
@@ -107,10 +105,10 @@ slider_inputs = [
     html.Div(
         [
             dbc.Row([
-                dbc.Label("Voir l'évolution après"),
-                dbc.Col([dcc.Slider(5, 50, 1, value=10, id='my-slider', updatemode='drag'), ], width=11,
+                dbc.Label("Sélectionnez la durée de votre investissement (en années) : "),
+                dbc.Col([dcc.Slider(0, 50, 1, value=0, id='my-slider', updatemode='drag'), ], width=11,
                         className="slider_col"),
-                dbc.Col([dbc.FormText("années")], width=1, className="slider_col")
+                dbc.Col([dbc.FormText("")], width=1, className="slider_col")
             ]),
         ]
     )
@@ -122,18 +120,32 @@ buttons = html.Div(
         dbc.Button("Visualiser", color="success", className="me-md-2", outline=True, id="apply-button", n_clicks=0),
     ],
     className="d-grid gap-2 d-md-flex justify-content-md-end",
-)
+), html.Div(id='dummy1')
 
 outputs = [
     html.Div(
         [
-            html.H4("💰 Retraits par mois", className="settings_title"),
+            html.H4("💰 Intérêts mensuels", className="settings_title"),
+            dbc.Label("Montant disponible par mois"),
+            html.I(className="icon bi bi-question-circle me-2", id="monthly_withdrawals_help"),
+            dbc.Tooltip("Ce montant pourra être retiré chaque mois, durant la période objectif choisie",
+                        target="monthly_withdrawals_help"),
             dbc.Col([
-                dbc.Label("Montant disponible par mois"),
-                html.I(className="icon bi bi-question-circle me-2", id="monthly_withdrawals_help"),
-                dbc.Tooltip("Ce montant pourra être retiré chaque mois, durant la période objectif choisie",
-                            target="monthly_withdrawals_help"),
-                html.H4("-- CHF", className="amount", id="monthly-withdrawals")
+                dbc.InputGroup(
+                    [
+                        dbc.InputGroupText("CHF"),
+                        dbc.Input(
+                            id="monthly_withdrawals",
+                            type="number",
+                            min=0,
+                            value="0",
+                            step=1,
+                            required=True,
+                            readonly=True
+                        ),
+                        dbc.InputGroupText(".00"),
+                    ],
+                ),
             ]),
         ]
     )
