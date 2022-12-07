@@ -19,7 +19,7 @@ investments_inputs = [
                             id="initial_investment",
                             type="number",
                             min=0,
-                            value="500",
+                            value="10000",
                             step=100,
                             required=True
                         ),
@@ -41,7 +41,7 @@ investments_inputs = [
                             id="investment_per_month",
                             type="number",
                             min=0,
-                            value="100",
+                            value="500",
                             step=50,
                             required=True
                         ),
@@ -63,7 +63,7 @@ investments_inputs = [
                             min=0,
                             max=100,
                             step=".10",
-                            value=5.5,
+                            value=5,
                             required=True
                         ),
                         dbc.InputGroupText("%"),
@@ -168,6 +168,10 @@ home_layout = dbc.Row([
             dbc.CardBody([
                 dbc.Label("Parts des investissements et des intérêts au fil du temps :"),
                 dcc.Graph(id="barchart"),
+            ]),
+            dbc.CardBody([
+                dbc.Label("Parts des investissements et des intérêts à l'année sélectionné :"),
+                dcc.Graph(id="piechart"),
             ]),
             dbc.CardBody([
                 dbc.Label("Carte des pays où vous pouvez aller vivre :"),

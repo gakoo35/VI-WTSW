@@ -3,14 +3,13 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import maths_functions as math
-from dash import Input, Output
+from dash import Input, Output, State
 from app import app
 
 # ------------------- world map chart -----------------
 
 df = pd.read_csv('datasets/country_dataset.csv')
 df = df.drop('GDP (BILLIONS)', axis=1)
-print(df.head())
 df['livable'] = df['COUNTRY'].isin([None])
 df["livable"] = df["livable"].astype(int)
 df["livable"] = df["livable"].astype(str)
@@ -54,15 +53,11 @@ barchartDF['interest'] = [0, 677, 1695, 3072, 4827, 6978, 9547, 12554, 16021, 19
 
 @app.callback(
     # [Output("barchart", "figure"), Output("monthly_withdrawals", "children")],
-    [Output("barchart", "figure"), Output("monthly_withdrawals", "value")],
-    [Input("my-slider", "value"), Input("initial_investment", "value"), Input("investment_per_month", "value"),
-     Input("interest_rate", "value"), Input("independence_duration", "value")]
+    Output("barchart", "figure"),
+    [Input("my-slider", "value"), Input("dummy1", "value")] # [Input("my-slider", "value"), Input("initial_investment", "value"), Input("investment_per_month", "value"), Input("interest_rate", "value"), Input("independence_duration", "value")]
 )
-def barchart_df(year, ia, ma, ir, independence_duration):
+def barchart_df(year, dummy):
     global data_slider
-    print("independence duration = ")
-    print(independence_duration)
-    print(independence_duration)
     # still need to figure out what is displayed when hover
     data1 = barchartDF[barchartDF["years"] == 2022 + year]
     data2 = barchartDF[barchartDF["years"] != 2022 + year]
@@ -70,20 +65,107 @@ def barchart_df(year, ia, ma, ir, independence_duration):
                   x="years",
                   y=["investment", "interest"],
                   title="Compound interest",
-                  color_discrete_sequence=["#0D0CB5", "#BECBFF"]
+                  color_discrete_sequence=['#00441B', '#C6EBC5']
                   )
     fig2 = px.bar(data2,
                   x="years",
                   y=["investment", "interest"],
                   title="Compound interest",
-                  color_discrete_sequence=['#00441B', '#C6EBC5']
+                  color_discrete_sequence=['#0D0CB5', '#BECBFF']
                   )
 
     fig3 = go.Figure(data=fig1.data + fig2.data)
     fig3.update_layout(barmode='relative')
-    print("Year : ")
-    print(year)
+    return fig3
 
+
+@app.callback(
+    Output("map", "figure"),
+    [Input("my-slider", "value"), Input("dummy1", "value")]
+)
+def display_map(year, dummy):
+    fig = go.Figure(
+        data=[go.Choropleth(
+
+            locations=data_slider[year]['CODE'],
+            z=data_slider[year]['livable'],
+            colorscale='Greens',
+            marker_line_color='darkgray',
+            marker_line_width=0.5,
+            hovertemplate=
+            "<b>" + data_slider[year]['COUNTRY'] + " </b><br>" +
+            "longitude: " + str(1) + "<br>" +  # change values here if needed --> else remove
+            "latitude: " + str(2) + "<br>",  # change values here if needed --> else remove
+        )]
+    )
+    fig.update_geos(
+        showlakes=False,
+        projection_type="orthographic"
+    )
+    fig.update_layout(
+        # width=1200,
+        height=800,
+        # autosize=False,
+    )
+    return fig
+
+@app.callback(
+    Output("piechart", "figure"),
+    [Input("my-slider", "value"), Input("dummy1", "value")] 
+)
+def display_pie_chart(year, dummy):
+    data = barchartDF[barchartDF["years"] == 2022 + year]
+    print(data)
+    investissement = data['investment'].values[0]
+    interet = data['interest'].values[0]
+    annee = data['years'].values[0]
+    temp_df = pd.DataFrame(data={'col1': [investissement, interet], 'col2': [annee, annee], 'col3': ['investment', 'interest']})
+    print(temp_df)
+    fig = px.pie(temp_df, values='col1', names='col3', color_discrete_sequence=['#C6EBC5', '#00441B'])
+
+    return fig
+
+@app.callback(
+    [Output("initial_investment", "value"), Output("investment_per_month", "value"), Output("interest_rate", "value"),
+     Output("independence_duration", "value")],
+    [Input("reset-button", "n_clicks")]
+)
+def on_button_click_res(_):
+    return 10000, 500, 5, 30
+
+
+@app.callback(
+    Output("dummy1", "value"),
+    [State("initial_investment", "value"), State("investment_per_month", "value"), State("interest_rate", "value"), State("independence_duration", "value"), State("my-slider", "value"),
+     Input("apply-button", "n_clicks")]
+)
+def on_button_click_update(ia, ma, ir, independence_duration, year, _):
+    print('DWADADWAD JE VEUX DAWDAWDA')
+    print("debug - ", ia, ma, ir, independence_duration, year)
+    ia = int(ia)
+    ma = int(ma)
+    ir = float(ir)
+    global barchartDF
+    # Calculate total wealth per year (value invested + cmpi)
+    total_value_with_cmpi = []
+    for i in range(51):
+        total_value_with_cmpi.append(math.get_total_wealth(ia, ma, i, ir))
+
+    # Calculate total value invested (without cmpi)
+    total_value_invested_per_year = []
+    for i in range(51):
+        total_value_invested_per_year.append(math.get_total_ma(ia, ma, i))
+    barchartDF['investment'] = total_value_invested_per_year
+
+    # Calculate total compound value per year
+    total_only_cmpi = []
+    for i in range(51):
+        total_only_cmpi.append(math.get_compound_interest_added_value(total_value_invested_per_year[i],
+                                                                      total_value_with_cmpi[i]))
+    barchartDF['interest'] = total_only_cmpi
+
+    # FOR THE COUNTRIES : 
+    global data_slider
     total_wealth = math.get_total_wealth(ia, ma, year, ir)
     monthly_income = math.get_monthly_income(total_wealth, independence_duration)
     eligible_countries = math.filter_countries(monthly_income)
@@ -112,80 +194,19 @@ def barchart_df(year, ia, ma, ir, independence_duration):
         df_temp_2 = pd.concat([df_color, df_temp_2], ignore_index=True)
         data_slider.append(df_temp_2)
 
+    return 10
+
+
+@app.callback(
+    Output("monthly_withdrawals", "value"),
+    [State("initial_investment", "value"), State("investment_per_month", "value"), State("interest_rate", "value"), State("independence_duration", "value"), Input("my-slider", "value"), 
+    Input("apply-button", "n_clicks")]
+)
+def cal_withdrawal(ia, ma, ir, independence_duration, year, _):
+    ia = int(ia)
+    ma = int(ma)
+    ir = float(ir)
     actual_total_wealth = math.get_total_wealth(ia, ma, year, ir)
     actual_monthly_income = math.get_monthly_income(actual_total_wealth, independence_duration)
 
-    return fig3, actual_monthly_income
-
-
-@app.callback(
-    Output("map", "figure"),
-    [Input("apply-button", "n_clicks"), Input("my-slider", "value")]
-)
-def display_map(nb_clicks, year):
-    fig = go.Figure(
-        data=[go.Choropleth(
-
-            locations=data_slider[year]['CODE'],
-            z=data_slider[year]['livable'],
-            colorscale='Greens',
-            marker_line_color='darkgray',
-            marker_line_width=0.5,
-            hovertemplate=
-            "<b>" + data_slider[year]['COUNTRY'] + " </b><br>" +
-            "longitude: " + str(1) + "<br>" +  # change values here if needed --> else remove
-            "latitude: " + str(2) + "<br>",  # change values here if needed --> else remove
-        )]
-    )
-    fig.update_geos(
-        showlakes=False,
-        projection_type="orthographic"
-    )
-    fig.update_layout(
-        # width=1200,
-        height=800,
-        # autosize=False,
-    )
-    return fig
-
-
-@app.callback(
-    [Output("initial_investment", "value"), Output("investment_per_month", "value"), Output("interest_rate", "value"),
-     Output("independence_duration", "value")],
-    [Input("reset-button", "n_clicks")]
-)
-def on_button_click(_):
-    return 10000, 500, 5, 30
-
-
-@app.callback(
-    Output("dummy1", "children"),
-    [Input("initial_investment", "value"), Input("investment_per_month", "value"), Input("interest_rate", "value"),
-     Input("apply-button", "n_clicks")]
-)
-def on_button_click(ia, ma, ir, _):
-    global barchartDF
-    # Calculate total wealth per year (value invested + cmpi)
-    total_value_with_cmpi = []
-    for i in range(51):
-        total_value_with_cmpi.append(math.get_total_wealth(ia, ma, i, ir))
-    print("total_value_with_cmpi : ")
-    print(total_value_with_cmpi)
-
-    # Calculate total value invested (without cmpi)
-    total_value_invested_per_year = []
-    for i in range(51):
-        total_value_invested_per_year.append(math.get_total_ma(ia, ma, i))
-    print("total_value_invested_per_year : ")
-    print(total_value_invested_per_year)
-    barchartDF['investment'] = total_value_invested_per_year
-
-    # Calculate total compound value per year
-    total_only_cmpi = []
-    for i in range(51):
-        total_only_cmpi.append(math.get_compound_interest_added_value(total_value_invested_per_year[i],
-                                                                      total_value_with_cmpi[i]))
-    print("total_only_cmpi : ")
-    print(total_only_cmpi)
-    barchartDF['interest'] = total_only_cmpi
-    return
+    return actual_monthly_income
