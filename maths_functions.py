@@ -18,14 +18,14 @@ NY_COST_OF_LIVING = 5500  # the cost of living in NY city is estimated at 5500$
 PI = 12  # period interest (usually = 12 because there is 12 months in a year)
 
 
-def get_compound_interest_added_value(val: any, cmpi: any):
+def get_compound_interest_added_value(ia: any, val: any, cmpi: any):
     """
     This method calculates the compound interest added value only
     :param val: total value invested
     :param cmpi: total value with compound interest
     :return: the compound interest added value
     """
-    return round(cmpi - val)
+    return round(cmpi - val - ia)
 
 
 def get_total_wealth(ia: any, ma: any, year: any, ir: any):
@@ -41,7 +41,7 @@ def get_total_wealth(ia: any, ma: any, year: any, ir: any):
                  (ia * (1 + ((ir / 100) / PI)) ** (PI * year)))
 
 
-def get_total_ma(ia: any, ma: any, year: any):
+def get_total_ma(ma: any, year: any):
     """
     This method calculates the total value monthly invested (without compound interest)
     :param ia : initial amount invested
@@ -49,7 +49,7 @@ def get_total_ma(ia: any, ma: any, year: any):
     :param year: duration of the investment (in years)
     :return: the total wealth accumulated over the years without taking compound value in account
     """
-    return round(ia + (ma * 12 * year))
+    return round((ma * 12 * year))
 
 
 def get_ia_with_compound_interest(ia: any, year: any, ir: any):
@@ -81,4 +81,4 @@ def get_monthly_income(tw:any , independence_duration: any):
 
 def filter_countries(income):
     countries = clean_df['Country'][clean_df['Cost of Living Plus Rent Index in dollars'] <= income]
-    return countries
+    return countries, clean_df

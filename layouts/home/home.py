@@ -18,9 +18,8 @@ investments_inputs = [
                         dbc.Input(
                             id="initial_investment",
                             type="number",
-                            min=0,
+                            min=1,
                             value="10000",
-                            step=100,
                             required=True
                         ),
                         dbc.InputGroupText(".00"),
@@ -40,9 +39,8 @@ investments_inputs = [
                         dbc.Input(
                             id="investment_per_month",
                             type="number",
-                            min=0,
+                            min=1,
                             value="500",
-                            step=50,
                             required=True
                         ),
                         dbc.InputGroupText(".00"),
@@ -60,7 +58,7 @@ investments_inputs = [
                         dbc.Input(
                             id="interest_rate",
                             type="number",
-                            min=0,
+                            min=0.1,
                             max=100,
                             step=".10",
                             value=5,
@@ -165,17 +163,25 @@ home_layout = dbc.Row([
     dbc.Col([
         dbc.Row([
             dbc.CardBody(slider_inputs),
-            dbc.CardBody([
-                dbc.Label("Parts des investissements et des intérêts au fil du temps :"),
-                dcc.Graph(id="barchart"),
-            ]),
-            dbc.CardBody([
-                dbc.Label("Parts des investissements et des intérêts à l'année sélectionné :"),
-                dcc.Graph(id="piechart"),
-            ]),
-            dbc.CardBody([
-                dbc.Label("Carte des pays où vous pouvez aller vivre :"),
-                dcc.Graph(id="map"),
+            dbc.Tabs([
+                dbc.Tab(label='Evolution des capitaux', labelClassName="text-dark tabs",
+                        tab_style={"marginLeft": "auto", "marginRight": "auto"}, children=[
+                        dbc.CardBody([
+                            dcc.Graph(id="barchart"),
+                        ]),
+                    ]),
+                dbc.Tab(label='Parts des investissements et des intérêts', labelClassName="text-dark tabs",
+                        tab_style={"marginLeft": "auto", "marginRight": "auto"}, children=[
+                        dbc.CardBody([
+                            dcc.Graph(id="piechart"),
+                        ]),
+                    ]),
+                dbc.Tab(label='Carte des pays où vous pouvez aller vivre', labelClassName="text-dark tabs",
+                        tab_style={"marginLeft": "auto", "marginRight": "auto"}, children=[
+                        dbc.CardBody([
+                            dcc.Graph(id="map"),
+                        ]),
+                    ]),
             ]),
         ], className="main_content", id="valid_display")
     ], md=12, lg=8, xxl=9),
