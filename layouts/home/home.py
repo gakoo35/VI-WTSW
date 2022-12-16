@@ -123,7 +123,7 @@ buttons = html.Div(
 outputs = [
     html.Div(
         [
-            html.H4("💰 Intérêts mensuels", className="settings_title"),
+            html.H4("💰 Capital", className="settings_title"),
             dbc.Label("Montant disponible par mois"),
             html.I(className="icon bi bi-question-circle me-2", id="monthly_withdrawals_help"),
             dbc.Tooltip("Ce montant pourra être retiré chaque mois, durant la période objectif choisie",
@@ -134,6 +134,27 @@ outputs = [
                         dbc.InputGroupText("CHF"),
                         dbc.Input(
                             id="monthly_withdrawals",
+                            type="number",
+                            min=0,
+                            value="0",
+                            step=1,
+                            required=True,
+                            readonly=True
+                        ),
+                        dbc.InputGroupText(".00"),
+                    ],
+                ),
+            ]),
+            dbc.Label("Montant total disponible"),
+            html.I(className="icon bi bi-question-circle me-2", id="total_help"),
+            dbc.Tooltip("Capital total accumulé",
+                        target="total_help"),
+            dbc.Col([
+                dbc.InputGroup(
+                    [
+                        dbc.InputGroupText("CHF"),
+                        dbc.Input(
+                            id="total_capital",
                             type="number",
                             min=0,
                             value="0",

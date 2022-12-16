@@ -251,7 +251,8 @@ def on_button_click_update(ia, ma, ir, independence_duration, year, _):
 
 
 @app.callback(
-    Output("monthly_withdrawals", "value"),
+    [Output("monthly_withdrawals", "value"),
+    Output("total_capital", "value")],
     [State("initial_investment", "value"), State("investment_per_month", "value"), State("interest_rate", "value"), State("independence_duration", "value"), Input("my-slider", "value"), 
     Input("apply-button", "n_clicks")]
 )
@@ -264,4 +265,4 @@ def cal_withdrawal(ia, ma, ir, independence_duration, year, _):
     actual_total_wealth = math.get_total_wealth(ia, ma, year, ir)
     actual_monthly_income = math.get_monthly_income(actual_total_wealth, independence_duration)
 
-    return actual_monthly_income
+    return actual_monthly_income, actual_total_wealth
