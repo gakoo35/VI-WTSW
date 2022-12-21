@@ -125,7 +125,6 @@ def barchart_df(year, dummy):
     [Input("my-slider", "value"), Input("dummy1", "value")]
 )
 def display_map(year, dummy):
-    print(data_slider[year]['monthly_cost'].values)
     data_slider[year] = data_slider[year].round(2)
     data_slider[year]["monthly_cost"] = data_slider[year]["monthly_cost"].astype(str)
     fig = go.Figure(
@@ -163,8 +162,8 @@ def display_pie_chart(year, dummy):
     initial = data['initial'].values[0]
     annee = data['years'].values[0]
     temp_df = pd.DataFrame(data={'CHF': [investissement, interet, initial], 'col2': [annee, annee, annee], 'Type': ['investment', 'interest', 'initial']})
-    fig = px.pie(temp_df, values='CHF', names='Type', color_discrete_sequence=['#5F8D4E', '#285430', '#A4BE7B'])
-
+    fig = px.pie(temp_df, values='CHF', names='Type', color_discrete_map={'interest':'#A4BE7B', 'investment':'#5F8D4E', 'initial':'#285430'}, color='Type')
+    
     return fig
 
 @app.callback(
@@ -220,9 +219,9 @@ def on_button_click_update(ia, ma, ir, independence_duration, year, _):
 
     every_year_eligible_countries = []
     data_slider = []
-    data_slider.append(df_basic)
+    #data_slider.append(df_basic)
 
-    for actual_year in range(50):
+    for actual_year in range(51):
         total_wealth = math.get_total_wealth(ia, ma, actual_year, ir)
         monthly_income = math.get_monthly_income(total_wealth, independence_duration)
         actual_eligible_countries, clean_df = math.filter_countries(monthly_income)
