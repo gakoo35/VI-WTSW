@@ -43,7 +43,10 @@ permet de déterminer si une personne est capable de vivre dans un pays ou non e
 Ce dataset, bien que très complet, a tout de même quelque blanc concernant certains pays (principalement en Afrique). 
 Nous avons donc décidé de tout de même l'utiliser mais de ne pas ajouter valeur fictive pour ces pays manquant afin de 
 ne pas induire l'utilisateur en erreur. Il y aura donc quelque pays pour lequel il sera impossible de savoir le prix 
-pour pouvoir y vivre. 
+pour pouvoir y vivre. De plus, le dataset contient des indices, cela signifie que la valeur pour New York est de 
+100%. Nous avons donc dû estimer le coût réel pour vivre à New York à 5'500$. Cette valeur est donc la base sur 
+quoi repose toute notre application. C'est donc important de noter que cette valeur est propre à nous et n'est pas 
+une information certifié. 
 
 ## Technologies
 Concernant les technologies, nous avions prévu au départ de travailler avec [Observable](https://observablehq.com/). 
