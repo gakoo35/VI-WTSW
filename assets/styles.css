@@ -51,3 +51,29 @@
 .tabs{
     margin-left: auto;
 }
+
+
+h4:nth-of-type(1) {
+    color: #A4BE7B;
+    background-color: #A4BE7B;
+}
+h4:nth-of-type(2) {
+    color: #5F8D4E;
+    background-color: #5F8D4E;
+}
+h4:nth-of-type(3) {
+    color: #285430;
+    background-color: #285430;
+}
+h4:nth-of-type(4) {
+    color: #d7eaf3;
+    background-color: #d7eaf3;
+}
+h4:nth-of-type(5) {
+    color: #77b5d9;
+    background-color: #77b5d9;
+}
+h4:nth-of-type(6) {
+    color: #14397d;
+    background-color: #14397d;
+}
